@@ -1,0 +1,55 @@
+body{
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.822);
+    font-size: 1.2rem;
+}
+
+.desc{
+    margin: 5rem;
+    margin-left: 30rem;
+    margin-right: 30rem;
+}
+
+.start{
+    text-decoration: none;
+    color: white;
+    border: solid black;    
+    border-radius: 5px;
+    padding: 4px;
+    background-color: black;
+}
+
+h1{
+    margin-top: 4rem;
+}
+
+.players{
+    margin-top: 5rem;
+}
+
+.players > *{
+    width: 300px;
+    border: solid black;
+    border-radius: 5px;
+}
+
+.p1{
+    margin-right: 100px;
+}
+
+.ready{
+    margin-top: 3rem;
+    border: solid rgb(248, 40, 40);
+    border-radius: 5px;
+    font-size: 1.5rem;
+    background-color: rgb(248, 40, 40);
+}
+
+.choose{
+    margin-top: 1rem;
+}
+
+.choose > *{
+    margin: 5px;
+}
