@@ -20,6 +20,9 @@ const stein = document.querySelector(".stein")
 const saks = document.querySelector(".saks")
 const papir = document.querySelector(".papir")
 
+const winSound = document.querySelector(".winSound")
+const loseSound = document.querySelector(".loseSound")
+
 let hand = ""
 let com = ""
 let early = ""
@@ -131,6 +134,7 @@ function loop(){
             p2ScoreHtml.innerHTML = `${p2Score}`
             p1.style.border = "solid red"
             p2.style.border = "solid green"
+            loseSound.play()
             console.log("for rask stein")
         } else if(early == "saks"){
             p2.src = "../img/saks.jpg"
@@ -138,6 +142,7 @@ function loop(){
             p2ScoreHtml.innerHTML = `${p2Score}`
             p1.style.border = "solid red"
             p2.style.border = "solid green"
+            loseSound.play()
             console.log("for rask saks")
         } else if(early == "papir"){
             p2.src = "../img/papir.jpg"
@@ -145,6 +150,7 @@ function loop(){
             p2ScoreHtml.innerHTML = `${p2Score}`
             p1.style.border = "solid red"
             p2.style.border = "solid green"
+            loseSound.play()
             console.log("for rask papir")
         } else {
             if(hand == "stein" && com == "saks"){
@@ -152,18 +158,21 @@ function loop(){
                 p1ScoreHtml.innerHTML = `${p1Score}`
                 p1.style.border = "solid green"
                 p2.style.border = "solid red"
+                winSound.play()
                 console.log("win")
             } else if(hand == "saks" && com == "papir"){
                 p1Score += 1
                 p1ScoreHtml.innerHTML = `${p1Score}`
                 p1.style.border = "solid green"
                 p2.style.border = "solid red"
+                winSound.play()
                 console.log("win")
             } else if(hand == "papir" && com == "stein"){
                 p1Score += 1
                 p1ScoreHtml.innerHTML = `${p1Score}`
                 p1.style.border = "solid green"
                 p2.style.border = "solid red"
+                winSound.play()
                 console.log("win")
             } else if(hand == com){
                 p1.style.border = "solid white"
@@ -174,6 +183,7 @@ function loop(){
                 p2ScoreHtml.innerHTML = `${p2Score}`
                 p2.style.border = "solid green"
                 p1.style.border = "solid red"
+                loseSound.play()
                 console.log("lose")
             }
         }
