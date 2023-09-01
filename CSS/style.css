@@ -24,11 +24,47 @@ h1{
     margin-top: 4rem;
 }
 
-.players{
-    margin-top: 5rem;
+.round{
+    margin-top: 2rem;
+    font-size: 2rem
 }
 
-.players > *{
+.timer{
+    font-size: 4rem;
+}
+
+.score{
+    font-size: 3rem;
+    position: relative;
+    top: 6rem;
+    right: 3rem;
+    display: flex;
+}
+
+.score > *{
+    margin: 1rem;
+}
+
+.p1Round{
+    font-size: 3rem;
+    position: absolute;
+    left: 34%;
+    top: 30rem;
+}
+
+.p2Round{
+    font-size: 3rem;
+    position: absolute;
+    right: 34%;
+    top: 30rem;
+}
+
+.players{
+    margin-top: 2rem;
+    display: inline-flex;
+}
+
+.players > img{
     width: 300px;
     border: solid black;
     border-radius: 5px;
@@ -44,6 +80,7 @@ h1{
     border-radius: 5px;
     font-size: 1.5rem;
     background-color: rgb(248, 40, 40);
+    padding: 10px;
 }
 
 .choose{
