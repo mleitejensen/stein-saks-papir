@@ -74,7 +74,7 @@ h1{
     margin-right: 100px;
 }
 
-.ready{
+#readyButton{
     margin-top: 3rem;
     border: solid rgb(248, 40, 40);
     border-radius: 5px;
