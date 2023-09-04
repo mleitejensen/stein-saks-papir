@@ -32,6 +32,7 @@ let round = 1
 function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen"
     readyButton.style.backgroundColor = "chartreuse";
     readyButton.style.border = "solid chartreuse";
+    readyButton.style.animation = "none"
     document.getElementById("readyButton").disabled = true; 
     p1.style.border = "solid black"
     p2.style.border = "solid black"
@@ -191,6 +192,9 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
             }
             readyButton.style.backgroundColor = "red";
             readyButton.style.border = "solid red";
+            readyButton.style.animation = "button 1s"
+            readyButton.style.animationDirection = "alternate" 
+            readyButton.style.animationIterationCount = "infinite"
             p1Score = 0
             p2Score = 0
             round += 1

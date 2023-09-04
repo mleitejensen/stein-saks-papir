@@ -74,6 +74,17 @@ h1{
     margin-right: 100px;
 }
 
+@keyframes button{
+    from {
+        background-color: rgb(248, 40, 40);
+        border: solid rgb(248, 40, 40);
+    }
+    to {
+        background-color:gold;
+        border: solid gold;
+    }
+}
+
 #readyButton{
     margin-top: 3rem;
     border: solid rgb(248, 40, 40);
@@ -81,6 +92,9 @@ h1{
     font-size: 1.5rem;
     background-color: rgb(248, 40, 40);
     padding: 10px;
+    animation: button 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
 }
 
 .choose{
