@@ -51,8 +51,8 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
         return time
     }, 1000)
 
-    p1Interval = setInterval(randomPic1, 40)
-    p2Interval = setInterval(randomPic2, 40)
+    p1Interval = setInterval(randomPic1, 100)
+    p2Interval = setInterval(randomPic2, 100)
     
     function randomPic1(){ //rullerer tilfeldig mellom bildene
         let x = Math.floor(Math.random() * 3)
@@ -84,102 +84,89 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
         }
     }
     
-    stein.addEventListener("click", e => { //lagrer valget "stein"
-        hand = "stein"
+    function clickEarly(x){
+        hand = `${x}`
         early = ""
-        p1.src = "../img/stein.jpg"
-        if(timer.innerHTML >= 2){ //hvis du trykker for tidlig velger motstander papir
-            console.log(timer.innerHTML)
-            early = "papir"
-        }
+        p1.src = `../img/${x}.jpg`
         clearInterval(p1Interval);
-    })
-    saks.addEventListener("click", e => { //lagrer valget "saks"
-        hand = "saks"
-        early = ""
-        p1.src = "../img/saks.jpg"
-        if(timer.innerHTML >= 2){ //hvis du trykker for tidlig velger motstander stein
-            console.log(early)
-            early = "stein"
+        if(timer.innerHTML >= 2){
+            if(x == "stein"){
+                console.log("papir")
+                early = "papir"
+            }
+            if(x == "saks"){
+                console.log("stein")
+                early = "stein"
+            }
+            if(x == "papir"){
+                console.log("saks")
+                early = "saks"
+            }
         }
-        clearInterval(p1Interval);
+    }
+
+    stein.addEventListener("click", e => {
+        clickEarly("stein")
     })
-    papir.addEventListener("click", e => { //lagrer valget "papir"
-        hand = "papir"
-        early = ""
-        p1.src = "../img/papir.jpg"
-        if(timer.innerHTML >= 2){ //hvis du trykker for tidlig velger motstander saks
-            console.log(early)
-            early = "saks"
-        }
-        clearInterval(p1Interval);
+    saks.addEventListener("click", e => {
+        clickEarly("saks")
     })
+    papir.addEventListener("click", e => {
+        clickEarly("papir")
+    })
+
+    function earlyResult(x){
+        p2.src = `../img/${x}.jpg`
+        p2Score+= 1
+        p2ScoreHtml.innerHTML = `${p2Score}`
+        p1.style.border = "solid red"
+        p2.style.border = "solid green"
+        loseSound.play()
+        console.log(`for rask ${x}`)
+    }
+
+    function playerWins(){
+        p1Score += 1
+        p1ScoreHtml.innerHTML = `${p1Score}`
+        p1.style.border = "solid green"
+        p2.style.border = "solid red"
+        winSound.play()
+        console.log("win")
+    }
+
+    function playerLooses(){
+        p2Score += 1
+        p2ScoreHtml.innerHTML = `${p2Score}`
+        p2.style.border = "solid green"
+        p1.style.border = "solid red"
+        loseSound.play()
+        console.log("lose")
+    }
 
     setTimeout(function(){ //kjører etter 3 sek
         clearInterval(p1Interval);
         clearInterval(p2Interval);
         console.log(com)
-        if(early == "stein"){ //skjekker om du trykket for tidlig
-            p2.src = "../img/stein.jpg"
-            p2Score += 1
-            p2ScoreHtml.innerHTML = `${p2Score}`
-            p1.style.border = "solid red"
-            p2.style.border = "solid green"
-            loseSound.play()
-            console.log("for rask stein")
-        } else if(early == "saks"){
-            p2.src = "../img/saks.jpg"
-            p2Score += 1
-            p2ScoreHtml.innerHTML = `${p2Score}`
-            p1.style.border = "solid red"
-            p2.style.border = "solid green"
-            loseSound.play()
-            console.log("for rask saks")
-        } else if(early == "papir"){
-            p2.src = "../img/papir.jpg"
-            p2Score += 1
-            p2ScoreHtml.innerHTML = `${p2Score}`
-            p1.style.border = "solid red"
-            p2.style.border = "solid green"
-            loseSound.play()
-            console.log("for rask papir")
+
+        if(early != ""){
+            earlyResult(early)
         } else {
             if(hand == "stein" && com == "saks"){ //skjekker om du vant
-                p1Score += 1
-                p1ScoreHtml.innerHTML = `${p1Score}`
-                p1.style.border = "solid green"
-                p2.style.border = "solid red"
-                winSound.play()
-                console.log("win")
+                playerWins()
             } else if(hand == "saks" && com == "papir"){ 
-                p1Score += 1
-                p1ScoreHtml.innerHTML = `${p1Score}`
-                p1.style.border = "solid green"
-                p2.style.border = "solid red"
-                winSound.play()
-                console.log("win")
+                playerWins()
             } else if(hand == "papir" && com == "stein"){
-                p1Score += 1
-                p1ScoreHtml.innerHTML = `${p1Score}`
-                p1.style.border = "solid green"
-                p2.style.border = "solid red"
-                winSound.play()
-                console.log("win")
+                playerWins()
             } else if(hand == com){ //skjekker om det ble uavgjort
                 p1.style.border = "solid white"
                 p2.style.border = "solid white"
                 console.log("tie")
             } else { //hvis du ikke vant eller ble uavgjort, så taper du
-                p2Score += 1
-                p2ScoreHtml.innerHTML = `${p2Score}`
-                p2.style.border = "solid green"
-                p1.style.border = "solid red"
-                loseSound.play()
-                console.log("lose")
+                playerLooses()
             }
         }
-        
-        if(p1Score == 2 || p2Score == 2){ //starter ny runde hvis noen har "2" i score
+
+        function newRound(){
             console.log("ny runde")
             setTimeout(function(){
             if(p1Score == 2){
@@ -192,9 +179,9 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
             }
             readyButton.style.backgroundColor = "red";
             readyButton.style.border = "solid red";
-            readyButton.style.animation = "button 1s"
-            readyButton.style.animationDirection = "alternate" 
-            readyButton.style.animationIterationCount = "infinite"
+            readyButton.style.animation = "button 1s" //starter animation
+            readyButton.style.animationDirection = "alternate" //gjør at animation går fram og tilbake
+            readyButton.style.animationIterationCount = "infinite" // gjør at animation ikke stopper
             p1Score = 0
             p2Score = 0
             round += 1
@@ -204,6 +191,11 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
             readyButton.innerText ="Spill igjen?"
             document.getElementById("readyButton").disabled = false; 
             }, 1000)
+        }
+
+        
+        if(p1Score == 2 || p2Score == 2){ //starter ny runde hvis noen har "2" i score
+            newRound()
         } else if(p1Score < 2 || p2Score < 2){ //hvis ingen har "2" i score, kjører koden igjen
             setTimeout(function(){
                 loop()
