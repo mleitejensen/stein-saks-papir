@@ -28,6 +28,85 @@ let com = ""
 let early = ""
 let round = 1
 
+function randomPic1(){ //rullerer tilfeldig mellom bildene
+    let x = Math.floor(Math.random() * 3)
+
+    if(x == 0){
+        p1.src = "../img/stein.jpg"
+    }
+    if(x == 1){
+        p1.src = "../img/saks.jpg"
+    }
+    if(x == 2){
+        p1.src = "../img/papir.jpg"
+    }
+}
+function randomPic2(){ //rullerer tilfeldig mellom bildene
+    let x = Math.floor(Math.random() * 3)
+
+    if(x == 0){
+        p2.src = "../img/stein.jpg"
+        com = "stein"
+    }
+    if(x == 1){
+        p2.src = "../img/saks.jpg"
+        com = "saks"
+    }
+    if(x == 2){
+        p2.src = "../img/papir.jpg"
+        com = "papir"
+    }
+}
+
+function clickEarly(x){ //kjører hvis du trykket for tidlig
+    hand = `${x}`
+    early = ""
+    p1.src = `../img/${x}.jpg`
+    clearInterval(p1Interval);
+    if(timer.innerHTML >= 2){
+        if(x == "stein"){
+            console.log("papir")
+            early = "papir"
+        }
+        if(x == "saks"){
+            console.log("stein")
+            early = "stein"
+        }
+        if(x == "papir"){
+            console.log("saks")
+            early = "saks"
+        }
+    }
+}
+
+function earlyResult(x){
+    p2.src = `../img/${x}.jpg`
+    p2Score+= 1
+    p2ScoreHtml.innerHTML = `${p2Score}`
+    p1.style.border = "solid red"
+    p2.style.border = "solid green"
+    loseSound.play()
+    console.log(`for rask ${x}`)
+}
+
+function playerWins(){
+    p1Score += 1
+    p1ScoreHtml.innerHTML = `${p1Score}`
+    p1.style.border = "solid green"
+    p2.style.border = "solid red"
+    winSound.play()
+    console.log("win")
+}
+
+function playerLooses(){
+    p2Score += 1
+    p2ScoreHtml.innerHTML = `${p2Score}`
+    p2.style.border = "solid green"
+    p1.style.border = "solid red"
+    loseSound.play()
+    console.log("lose")
+}
+
 
 function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen"
     readyButton.style.backgroundColor = "chartreuse";
@@ -53,57 +132,6 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
 
     p1Interval = setInterval(randomPic1, 100)
     p2Interval = setInterval(randomPic2, 100)
-    
-    function randomPic1(){ //rullerer tilfeldig mellom bildene
-        let x = Math.floor(Math.random() * 3)
-
-        if(x == 0){
-            p1.src = "../img/stein.jpg"
-        }
-        if(x == 1){
-            p1.src = "../img/saks.jpg"
-        }
-        if(x == 2){
-            p1.src = "../img/papir.jpg"
-        }
-    }
-    function randomPic2(){ //rullerer tilfeldig mellom bildene
-        let x = Math.floor(Math.random() * 3)
-
-        if(x == 0){
-            p2.src = "../img/stein.jpg"
-            com = "stein"
-        }
-        if(x == 1){
-            p2.src = "../img/saks.jpg"
-            com = "saks"
-        }
-        if(x == 2){
-            p2.src = "../img/papir.jpg"
-            com = "papir"
-        }
-    }
-    
-    function clickEarly(x){
-        hand = `${x}`
-        early = ""
-        p1.src = `../img/${x}.jpg`
-        clearInterval(p1Interval);
-        if(timer.innerHTML >= 2){
-            if(x == "stein"){
-                console.log("papir")
-                early = "papir"
-            }
-            if(x == "saks"){
-                console.log("stein")
-                early = "stein"
-            }
-            if(x == "papir"){
-                console.log("saks")
-                early = "saks"
-            }
-        }
-    }
 
     stein.addEventListener("click", e => {
         clickEarly("stein")
@@ -115,33 +143,7 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
         clickEarly("papir")
     })
 
-    function earlyResult(x){
-        p2.src = `../img/${x}.jpg`
-        p2Score+= 1
-        p2ScoreHtml.innerHTML = `${p2Score}`
-        p1.style.border = "solid red"
-        p2.style.border = "solid green"
-        loseSound.play()
-        console.log(`for rask ${x}`)
-    }
-
-    function playerWins(){
-        p1Score += 1
-        p1ScoreHtml.innerHTML = `${p1Score}`
-        p1.style.border = "solid green"
-        p2.style.border = "solid red"
-        winSound.play()
-        console.log("win")
-    }
-
-    function playerLooses(){
-        p2Score += 1
-        p2ScoreHtml.innerHTML = `${p2Score}`
-        p2.style.border = "solid green"
-        p1.style.border = "solid red"
-        loseSound.play()
-        console.log("lose")
-    }
+    
 
     setTimeout(function(){ //kjører etter 3 sek
         clearInterval(p1Interval);
@@ -193,7 +195,6 @@ function loop(){ //kjører hver gang man trykker på knappen "klar"/"spill igjen
             }, 1000)
         }
 
-        
         if(p1Score == 2 || p2Score == 2){ //starter ny runde hvis noen har "2" i score
             newRound()
         } else if(p1Score < 2 || p2Score < 2){ //hvis ingen har "2" i score, kjører koden igjen
